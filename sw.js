@@ -1,6 +1,6 @@
 // Service Worker - 离线缓存（Network-First 策略）
 // 版本号递增会触发重新安装，清理所有旧缓存
-const CACHE_VERSION = 'v24';
+const CACHE_VERSION = 'v25';
 const CACHE_NAME = `account-book-${CACHE_VERSION}`;
 
 // 安装：跳过等待，立即激活
