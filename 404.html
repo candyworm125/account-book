@@ -46,7 +46,7 @@
     </script>
     <title>记账本</title>
 
-    <script type="module" crossorigin src="./assets/index-CfnxwGnF.js?v=2"></script>
+    <script type="module" crossorigin src="./assets/index-CfnxwGnF.js?v=3"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-DNh2CBJ9.css">
   </head>
   <body>
@@ -55,7 +55,7 @@
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
           // 注册 SW，使用相对路径 + 版本号参数，确保子路径部署下正确解析并绕过缓存
-          navigator.serviceWorker.register('./sw.js?v=11')
+          navigator.serviceWorker.register('./sw.js?v=12')
             .then(function(registration) {
               // 监听新 SW 安装完成
               registration.addEventListener('updatefound', function() {
