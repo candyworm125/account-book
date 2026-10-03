@@ -1,23 +1,9 @@
----
-AIGC:
-  ContentProducer: '001191110102MAD55U9H0F10002'
-  ContentPropagator: '001191110102MAD55U9H0F10002'
-  Label: '1'
-  ProduceID: '1598b90b-d35d-41a5-a92b-82fa4279875c'
-  PropagateID: '1598b90b-d35d-41a5-a92b-82fa4279875c'
-  ReservedCode1: '3ee7a6af-090c-4aeb-81ea-6f7d76e0cd55'
-  ReservedCode2: '3ee7a6af-090c-4aeb-81ea-6f7d76e0cd55'
----
 
-# 精简记账本 · 语音记账 PWA
+# 精简记账本 · 语音记账 
 
 > 一句话或一句话音即可完成记账，智能解析金额与分类，数据本地安全存储
 
----
-
-## 朋友试用 · 两种方式
-
-### 方式一：直接在线试用（推荐）
+## 方式一：在线使用
 
 开启 GitHub Pages 后，直接访问：
 
@@ -27,15 +13,6 @@ https://<你的GitHub用户名>.github.io/<仓库名>/
 
 手机用 Chrome / Safari 打开，可"添加到主屏幕"当 App 用。
 
-### 方式二：本地跑源码
-
-```bash
-cd source-v1.3.0
-npm install
-npm run dev
-```
-
----
 
 ## 这是什么
 
