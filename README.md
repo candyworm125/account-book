@@ -1,0 +1,122 @@
+---
+AIGC:
+  ContentProducer: '001191110102MAD55U9H0F10002'
+  ContentPropagator: '001191110102MAD55U9H0F10002'
+  Label: '1'
+  ProduceID: '1598b90b-d35d-41a5-a92b-82fa4279875c'
+  PropagateID: '1598b90b-d35d-41a5-a92b-82fa4279875c'
+  ReservedCode1: '3ee7a6af-090c-4aeb-81ea-6f7d76e0cd55'
+  ReservedCode2: '3ee7a6af-090c-4aeb-81ea-6f7d76e0cd55'
+---
+
+# 精简记账本 · 语音记账 PWA
+
+> 一句话或一句话音即可完成记账，智能解析金额与分类，数据本地安全存储
+
+---
+
+## 朋友试用 · 两种方式
+
+### 方式一：直接在线试用（推荐）
+
+开启 GitHub Pages 后，直接访问：
+
+```
+https://<你的GitHub用户名>.github.io/<仓库名>/
+```
+
+手机用 Chrome / Safari 打开，可"添加到主屏幕"当 App 用。
+
+### 方式二：本地跑源码
+
+```bash
+cd source-v1.3.0
+npm install
+npm run dev
+```
+
+---
+
+## 这是什么
+
+一个手机端记账工具（PWA），核心特色：
+
+- **语音记账**：按住麦克风说"中午吃了 35 块拉面"，自动识别金额和分类
+- **文字记账**：输入一句话，智能解析金额、日期、分类、备注
+- **多笔拆分**：一句话说多笔，用句号/分号分隔
+- **加法表达式**：直接说"280+480"自动求和
+- **明细查看**：按日期分组、编辑、删除
+- **数据导出**：CSV（Excel 可直接打开）/ JSON 完整备份
+- **离线可用**：Service Worker 缓存，断网也能记账
+
+## 隐私
+
+- 所有数据保存在浏览器本地（localStorage），**不上传任何服务器**
+- 语音识别用浏览器原生 Web Speech API（数据由浏览器厂商处理，不由本应用控制）
+- 无账号、无登录、无埋点
+
+## 技术栈
+
+| 类别 | 技术 |
+|------|------|
+| 框架 | React 19 + TypeScript |
+| 构建 | Vite 8 |
+| 样式 | Tailwind CSS 4 + shadcn/ui |
+| 语音 | Web Speech API（浏览器原生）|
+| 存储 | localStorage |
+| 离线 | Service Worker (Network-First) |
+
+## 仓库结构
+
+```
+account-book-github/
+├── index.html              # 部署入口（已修复 GitHub Pages 子路径白屏）
+├── assets/                 # v2.4.5 构建产物（压缩后）
+├── sw.js                   # Service Worker
+├── manifest.json           # PWA 清单
+├── icons/                  # PWA 图标
+└── source-v1.3.0/          # v1.3.0 完整源码（可读）
+    ├── src/
+    │   ├── lib/parser.ts       # 智能解析引擎（核心）
+    │   ├── lib/storage.ts      # 存储层
+    │   ├── hooks/use-speech-recognition.ts  # 语音识别
+    │   ├── data/account.ts     # 分类体系
+    │   └── pages/             # 页面
+    ├── package.json
+    └── README.md
+```
+
+## 版本说明
+
+- **v2.4.5**（仓库根目录的部署包）：当前线上版本，含记事、自定义分类、统计页等功能
+- **v1.3.0**（`source-v1.3.0/`）：源码版本，功能较少但代码完整可读
+
+> v2.4.5 的源码不在本仓库（它是云端平台构建产物）。如需查看最新源码，请联系仓库主人。
+
+## 浏览器兼容性
+
+| 浏览器 | 语音识别 | 离线 | 备注 |
+|--------|---------|------|------|
+| Chrome（桌面/Android）| ✓ | ✓ | 完整支持 |
+| Safari（iOS 14.5+）| ✓ | ✓ | 用 webkit 前缀 |
+| Edge | ✓ | ✓ | 基于 Chromium |
+| Firefox | ✗ | ✓ | 降级为纯文字记账 |
+
+## 解析引擎支持的金额表达
+
+| 类型 | 示例 |
+|------|------|
+| ¥ 符号 | `¥600`、`¥45.5` |
+| 带单位 | `35元`、`35块`、`35块钱` |
+| 花费动词 | `花了35`、`消费45.5元` |
+| 转账 | `给宝宝转600`、`微信转了¥300` |
+| 加法 | `280+480` → 760 |
+| 句尾兜底 | `打车35` |
+
+支持日期：`8月22日`、`昨天`、`周一`、`上周三` 等。
+
+## License
+
+MIT
+
+> AI生成

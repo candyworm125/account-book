@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+    <meta name="theme-color" content="#d97706" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="记账本" />
+    <link rel="apple-touch-icon" href="./icons/icon-192.svg" />
+    <script>
+      // 动态生成 manifest —— 用当前应用 basePath 作为 id/start_url/scope
+      // 修复：不同页面添加到主屏幕时，manifest 相对路径解析不同
+      //       导致 iOS 认为是两个不同 PWA，数据/缓存完全隔离
+      (function() {
+        try {
+          var baseUrl = new URL('./', location.href);
+          var manifestData = {
+            name: '记账本',
+            short_name: '记账本',
+            description: '精简的手机端记账应用，支持语音和文字智能解析',
+            id: baseUrl.pathname,
+            start_url: baseUrl.pathname,
+            scope: baseUrl.pathname,
+            display: 'standalone',
+            orientation: 'portrait',
+            background_color: '#fef7ed',
+            theme_color: '#d97706',
+            lang: 'zh-CN',
+            icons: [
+              { src: new URL('./icons/icon-192.svg', baseUrl).href, sizes: '192x192', type: 'image/svg+xml', purpose: 'any maskable' },
+              { src: new URL('./icons/icon-512.svg', baseUrl).href, sizes: '512x512', type: 'image/svg+xml', purpose: 'any maskable' }
+            ]
+          };
+          var blob = new Blob([JSON.stringify(manifestData)], { type: 'application/manifest+json' });
+          var manifestUrl = URL.createObjectURL(blob);
+          var link = document.createElement('link');
+          link.rel = 'manifest';
+          link.href = manifestUrl;
+          document.head.appendChild(link);
+        } catch (e) {
+          // 降级：不影响使用
+        }
+      })();
+    </script>
+    <title>记账本</title>
+
+    <script type="module" crossorigin src="./assets/index-CfnxwGnF.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DNh2CBJ9.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          // 注册 SW，使用相对路径 + 版本号参数，确保子路径部署下正确解析并绕过缓存
+          navigator.serviceWorker.register('./sw.js?v=10')
+            .then(function(registration) {
+              // 监听新 SW 安装完成
+              registration.addEventListener('updatefound', function() {
+                var installingWorker = registration.installing;
+                if (installingWorker) {
+                  installingWorker.addEventListener('statechange', function() {
+                    if (installingWorker.state === 'installed') {
+                      if (navigator.serviceWorker.controller) {
+                        // 有旧版 SW 在控制 → 新版本已安装好
+                        // 让新 SW 立即接管，然后刷新页面
+                        installingWorker.postMessage({ type: 'SKIP_WAITING' });
+                      }
+                    }
+                  });
+                }
+              });
+
+              // 启动时立即检查一次更新（避免用户看到旧缓存）
+              registration.update().catch(function() {});
+
+              // 每 30 分钟检查一次更新
+              setInterval(function() {
+                registration.update();
+              }, 30 * 60 * 1000);
+            })
+            .catch(function() {
+              // SW 注册失败不影响使用
+            });
+
+          // 新 SW 接管时刷新页面以加载最新资源
+          var refreshing = false;
+          navigator.serviceWorker.addEventListener('controllerchange', function() {
+            if (!refreshing) {
+              refreshing = true;
+              window.location.reload();
+            }
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
