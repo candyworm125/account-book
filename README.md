@@ -92,8 +92,4 @@ account-book-github/
 
 支持日期：`8月22日`、`昨天`、`周一`、`上周三` 等。
 
-## License
-
-MIT
-
-> AI生成
+作者：worm
