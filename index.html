@@ -6,16 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
     <meta name="theme-color" content="#d97706" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="记账本" />
     <link rel="apple-touch-icon" href="./icons/icon-192.svg" />
     <script>
-      // 动态生成 manifest —— 用当前应用 basePath 作为 id/start_url/scope
-      // 修复：不同页面添加到主屏幕时，manifest 相对路径解析不同
-      //       导致 iOS 认为是两个不同 PWA，数据/缓存完全隔离
+      // 动态计算部署子路径（GitHub Pages 子路径部署兼容）
+      // 兼容带尾斜杠/不带尾斜杠的场景，统一成带尾斜杠的绝对路径
       (function() {
         try {
           var baseUrl = new URL('./', location.href);
+          window.__BASENAME__ = baseUrl.pathname;
+          // 动态生成 manifest —— 用当前应用 basePath 作为 id/start_url/scope
+          // 修复：不同页面添加到主屏幕时，manifest 相对路径解析不同
+          //       导致 iOS 认为是两个不同 PWA，数据/缓存完全隔离
           var manifestData = {
             name: '记账本',
             short_name: '记账本',
@@ -45,17 +49,26 @@
       })();
     </script>
     <title>记账本</title>
-
-    <script type="module" crossorigin src="./assets/index-CfnxwGnF.js?v=5"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-DNh2CBJ9.css?v=5">
+    <link rel="preload" href="./assets/polyfills.js" as="script">
+    <link rel="modulepreload" crossorigin href="./assets/rolldown-runtime-DAXXjFlN.js">
+    <link rel="modulepreload" crossorigin href="./assets/radix-CwXI1rm6.js">
+    <link rel="modulepreload" crossorigin href="./assets/toolkit-B0raeC8G.js">
+    <link rel="stylesheet" crossorigin href="./assets/index-DSK4oz6Q.css">
   </head>
   <body>
     <div id="root"></div>
     <script>
+      if (typeof crypto === "undefined" || typeof crypto.randomUUID !== "function" ||
+          typeof Object.hasOwn !== "function" || typeof [].at !== "function" || typeof [].findLast !== "function") {
+        document.write('<script src="./assets/polyfills.js"><\/script>');
+      }
+    </script>
+    <script type="module" crossorigin src="./assets/index-BXqdQ167.js"></script>
+    <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
           // 注册 SW，使用相对路径 + 版本号参数，确保子路径部署下正确解析并绕过缓存
-          navigator.serviceWorker.register('./sw.js?v=14')
+          navigator.serviceWorker.register('./sw.js?v=25')
             .then(function(registration) {
               // 监听新 SW 安装完成
               registration.addEventListener('updatefound', function() {

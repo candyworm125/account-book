@@ -1,0 +1,56 @@
+[
+  {
+    "path": "/"
+  },
+  {
+    "path": "/record"
+  },
+  {
+    "path": "/history"
+  },
+  {
+    "path": "/items"
+  },
+  {
+    "path": "/items/:id"
+  },
+  {
+    "path": "/items/new"
+  },
+  {
+    "path": "/items/:id/edit"
+  },
+  {
+    "path": "/favorites"
+  },
+  {
+    "path": "/favorites/:id"
+  },
+  {
+    "path": "/favorites/new"
+  },
+  {
+    "path": "/favorites/:id/edit"
+  },
+  {
+    "path": "/notes"
+  },
+  {
+    "path": "/share"
+  },
+  {
+    "path": "/stats"
+  },
+  {
+    "path": "/profile"
+  },
+  {
+    "path": "/categories"
+  },
+  {
+    "path": "/quick-capture"
+  },
+  {
+    "path": "/notes/new-image"
+  }
+]
